@@ -3,7 +3,7 @@
 close all
 clear all
 
-disp('Select VFA T1 map')
+disp('Select molli T1 map')
 t1mapName = uigetfile('*.dcm'); 
 vfa=dicomread(t1mapName);
 
@@ -21,10 +21,10 @@ ipssubmandib=load_nii('ips submandib-label.nii.gz');
 ipssubmandib=fliplr(rot90(ipssubmandib.img,1));
 consubmandib=load_nii('con submandib-label.nii.gz');
 consubmandib=fliplr(rot90(consubmandib.img,1));
-node=load_nii('Node-label.nii.gz');
-node=fliplr(rot90(node.img,1));
-primary=load_nii('Primary-label.nii.gz');
-primary=fliplr(rot90(primary.img,1));
+% node=load_nii('Node-label.nii.gz');
+% node=fliplr(rot90(node.img,1));
+% primary=load_nii('Primary-label.nii.gz');
+% primary=fliplr(rot90(primary.img,1));
 
 size(vfa)
 vfa=squeeze(vfa);
@@ -54,11 +54,11 @@ hold on
 b_consubmandib = bwboundaries(consubmandib(:,:,i)); 
 visboundaries(b_consubmandib,'Color','b','LineWidth', 1)
 hold on
-b_node = bwboundaries(node(:,:,i)); 
-visboundaries(b_node,'Color','g','LineWidth', 1)
-hold on
-b_primary = bwboundaries(primary(:,:,i)); 
-visboundaries(b_primary,'Color','w','LineWidth', 1)
+% b_node = bwboundaries(node(:,:,i)); 
+% visboundaries(b_node,'Color','g','LineWidth', 1)
+% hold on
+% b_primary = bwboundaries(primary(:,:,i)); 
+% visboundaries(b_primary,'Color','w','LineWidth', 1)
 colormap(plasma)
 axis off
 caxis([0,3500])
@@ -69,38 +69,38 @@ saveas(gcf,sprintf('%s_allroi_%d.png',t1mapName,i))
 
 end
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% PRIMARY 
-spreadsheet = zeros([1000,nbslice]);
-for i=1:nbslice
-
-figure 
-
-imagesc(vfa(:,:,i))
-hold on
-b_tumour = bwboundaries(primary(:,:,i)); 
-visboundaries(b_tumour,'Color','w','LineWidth', 1)
-colormap(plasma)
-axis off
-caxis([0,3500])
-daspect([1 1 1])
-colorbar
-title(sprintf('%s-primary-%d.png',t1mapName,i))
-saveas(gcf,sprintf('%s_primary_%d.png',t1mapName,i))
-
-
-mask = logical(primary(:,:,i));% Access the ROI data as a binary mask
-vfa_slice=vfa(:,:,i);
-vals_wbackground = vfa_slice(mask(:)); % Extract only the image values in the mask
-vals=vals_wbackground >0; 
-ROI_vals=vals_wbackground(vals);
-sizeROIvals=size(ROI_vals);
-    if ROI_vals > 0
-        spreadsheet(1:sizeROIvals(1),i)=ROI_vals;
-    end
-
-end
-save((sprintf('primaryROIvals%s.mat',t1mapName)),'spreadsheet','-mat')
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%PRIMARY 
+% spreadsheet = zeros([1000,nbslice]);
+% for i=1:nbslice
+% 
+% figure 
+% 
+% imagesc(vfa(:,:,i))
+% hold on
+% b_tumour = bwboundaries(primary(:,:,i)); 
+% visboundaries(b_tumour,'Color','w','LineWidth', 1)
+% colormap(plasma)
+% axis off
+% caxis([0,3500])
+% daspect([1 1 1])
+% colorbar
+% title(sprintf('%s-primary-%d.png',t1mapName,i))
+% saveas(gcf,sprintf('%s_primary_%d.png',t1mapName,i))
+% 
+% 
+% mask = logical(primary(:,:,i));% Access the ROI data as a binary mask
+% vfa_slice=vfa(:,:,i);
+% vals_wbackground = vfa_slice(mask(:)); % Extract only the image values in the mask
+% vals=vals_wbackground >0; 
+% ROI_vals=vals_wbackground(vals);
+% sizeROIvals=size(ROI_vals);
+%     if ROI_vals > 0
+%         spreadsheet(1:sizeROIvals(1),i)=ROI_vals;
+%     end
+% 
+% end
+% save((sprintf('primaryROIvals%s.mat',t1mapName)),'spreadsheet','-mat')
 
 %% supipsparotid
 spreadsheet = zeros([1000,nbslice]);
@@ -230,36 +230,36 @@ sizeROIvals=size(ROI_vals);
 end
 save(sprintf('consubmandibROIvals%s.mat',t1mapName),'spreadsheet')
 
-%% node
-spreadsheet = zeros([1000,nbslice]);
-for i=1:nbslice
-
-figure 
-
-imagesc(vfa(:,:,i))
-hold on
-b_tumour = bwboundaries(node(:,:,i)); 
-visboundaries(b_tumour,'Color','w','LineWidth', 1)
-colormap(plasma)
-axis off
-caxis([0,3500])
-daspect([1 1 1])
-colorbar
-title(sprintf('%s-node-%d.png',t1mapName,i))
-saveas(gcf,sprintf('%s_node_%d.png',t1mapName,i))
-
-
-mask = logical(node(:,:,i));% Access the ROI data as a binary mask
-vfa_slice=vfa(:,:,i);
-vals_wbackground = vfa_slice(mask(:)); % Extract only the image values in the mask
-vals=vals_wbackground >0; 
-ROI_vals=vals_wbackground(vals);
-sizeROIvals=size(ROI_vals);
-    if ROI_vals > 0
-        spreadsheet(1:sizeROIvals(1),i)=ROI_vals;
-    end
-
-end
-save(sprintf('nodeROIvals%s.mat',t1mapName),'spreadsheet')
-
-
+% %% node
+% spreadsheet = zeros([1000,nbslice]);
+% for i=1:nbslice
+% 
+% figure 
+% 
+% imagesc(vfa(:,:,i))
+% hold on
+% b_tumour = bwboundaries(node(:,:,i)); 
+% visboundaries(b_tumour,'Color','w','LineWidth', 1)
+% colormap(plasma)
+% axis off
+% caxis([0,3500])
+% daspect([1 1 1])
+% colorbar
+% title(sprintf('%s-node-%d.png',t1mapName,i))
+% saveas(gcf,sprintf('%s_node_%d.png',t1mapName,i))
+% 
+% 
+% mask = logical(node(:,:,i));% Access the ROI data as a binary mask
+% vfa_slice=vfa(:,:,i);
+% vals_wbackground = vfa_slice(mask(:)); % Extract only the image values in the mask
+% vals=vals_wbackground >0; 
+% ROI_vals=vals_wbackground(vals);
+% sizeROIvals=size(ROI_vals);
+%     if ROI_vals > 0
+%         spreadsheet(1:sizeROIvals(1),i)=ROI_vals;
+%     end
+% 
+% end
+% save(sprintf('nodeROIvals%s.mat',t1mapName),'spreadsheet')
+% 
+% 
