@@ -69,8 +69,8 @@ saveas(gcf,sprintf('%s_allroi_%d.png',t1mapName,i))
 
 end
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%PRIMARY 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%PRIMARY 
 spreadsheet = zeros([1000,nbslice]);
 for i=1:nbslice
 
