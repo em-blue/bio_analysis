@@ -64,12 +64,12 @@ axis off
 caxis([0,3500])
 daspect([1 1 1])
 colorbar
-title(sprintf('%s-allroi-%d.png',t1mapName,i))
-saveas(gcf,sprintf('%s_allroi_%d.png',t1mapName,i))
+title(sprintf('%s%s-allroi-%d.png',dirName,t1mapName,i))
+saveas(gcf,sprintf('%s%s_allroi_%d.png',dirName,t1mapName,i))
 
 end
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%PRIMARY 
 spreadsheet = zeros([1000,nbslice]);
 for i=1:nbslice
@@ -263,3 +263,4 @@ end
 save(sprintf('nodeROIvals%s.mat',t1mapName),'spreadsheet')
 
 
+beep
